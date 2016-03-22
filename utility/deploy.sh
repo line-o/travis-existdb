@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
-URL=${1}
-LEN=wc -c ${2} | awk '{print $1}'
-curl -X PUT -H "Content-Type:application/xquery;Content-Length:${LEN}" -d "@${2}" ${URL}
+LENGTH=wc -c ${2} | awk '{print $1}'
+HEAD="Content-Type:application/xquery;Content-Length:${LENGTH}"
+curl -X PUT -H "${HEAD}" -d "@${2}" ${1}
