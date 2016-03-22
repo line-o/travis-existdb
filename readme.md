@@ -136,22 +136,20 @@ Downloading and building exist from source can take up to 3 minutes. So, you may
 1. Teardown this Database
 
 	Remove any data that is or might be left behind by your tests and remove logs, too.
-	
+	To make sure that you will always get the latest version for branches or refs like HEAD,
+	anything but releases should be excluded from caching. 
+
 	```sh
-	echo "reset data and logfiles for ${EXIST_DB_VERSION}"
-	cd ${EXIST_DB_FOLDER}
-	./build.sh clean-default-data-dir
-	rm webapp/WEB-INF/logs/*.log
-	```
-	
-	If you want to test against a branch or HEAD you should exclude it from caching to always get the latest version. 
-	
-	```sh
-	if [ "${EXIST_DB_VERSION}" = eXist* ]; then
-	  echo "exclude HEAD from cache"
-	  rm -rf ${FOLDER}
-	  return 0
-	fi
+    if [[ "${EXIST_DB_VERSION}" == eXist* ]]; then
+        echo "reset data and logfiles for ${EXIST_DB_VERSION}"
+        cd ${EXIST_DB_FOLDER}
+        ./build.sh clean-default-data-dir
+        rm webapp/WEB-INF/logs/*.log
+        exit 0 # 
+    fi
+    
+    echo "exclude ${EXIST_DB_VERSION} from cache"
+    rm -rf ${EXIST_DB_FOLDER}
 	```
 
 Put together:
