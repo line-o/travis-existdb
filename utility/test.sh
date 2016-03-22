@@ -1,16 +1,18 @@
 #!/usr/bin/env sh
 URL=${1}
 RESULT=`curl -s ${URL}`
+EXPECTED=${EXIST_DB_VERSION:6}
 
 if [ -z "${RESULT}" ]; then
+    echo "Empty result, call failed!"
     exit 1
 fi
 
-if [ "${RESULT}" = "<result>${EXIST_DB_VERSION}</result>" ]; then
+if [ "${RESULT}" = "<result>${EXPECTED}</result>" ]; then
+    echo "${EXPECTED}"
     echo "expected result: ${RESULT}"
     exit 0
 fi
 
-echo "Version mismatch! Expected: ${EXIST_DB_VERSION} Actual: ${RESULT}"
-
-exit 127
+echo "Version mismatch! Expected: <result>${EXPECTED}</result> Actual: ${RESULT}"
+exit 2
