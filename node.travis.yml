@@ -1,0 +1,46 @@
+language: nodejs
+node: "5"
+
+# sane defaults
+sudo: false
+notifications:
+  email: false
+
+# which versions of eXist to test against
+env:
+  - EXIST_DB_VERSION=eXist-3.0.RC1
+  - EXIST_DB_VERSION=eXist-2.2
+
+# required if language is not java
+addons:
+  apt:
+    packages:
+      - oracle-java8-installer
+
+before_install:
+  - export JAVA_HOME=/usr/lib/jvm/java-8-oracle
+  - export EXIST_DB_FOLDER=${HOME}/exist/${EXIST_DB_VERSION}
+  - ci/setup-db.sh
+  - npm prune
+
+# this is the default
+# install: npm install
+
+# start the database before running the tests
+before_script:
+  - ci/start-db.sh
+
+# this is the default
+# script: npm test
+
+after_script:
+  - cd ${EXIST_DB_FOLDER}
+  - bin/shutdown.sh
+
+# dependency caching
+before_cache:
+  - ci/teardown-db.sh
+cache:
+  directories:
+    - node_modules
+    - ${HOME}/exist

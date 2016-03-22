@@ -1,0 +1,39 @@
+# your language of choice,
+# if it is not java 8 then have a look at the comments below
+language: java
+jdk: oraclejdk8
+
+# sane defaults
+sudo: false
+notifications:
+  email: false
+
+# which versions of eXist to test against
+env:
+  - EXIST_DB_VERSION=eXist-3.0.RC1
+  - EXIST_DB_VERSION=eXist-2.2
+
+# start db before installation to be able to deploy XAR packages
+before_install:
+  - export EXIST_DB_FOLDER=${HOME}/exist/${EXIST_DB_VERSION}
+  - ci/setup-db.sh
+  - ci/start-db.sh
+
+# assuming you install your eXistDB application with ant
+install:
+  - ant
+
+# and `ant test` will run your tests
+script:
+  - ant test
+
+after_script:
+  - cd ${EXIST_DB_FOLDER}
+  - bin/shutdown.sh
+
+# cacheing
+before_cache:
+  - ci/teardown-db.sh
+cache:
+  directories:
+    - ${HOME}/exist

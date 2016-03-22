@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="deploy" name="travis-existdb">
+
+    <property name="project.app" value="travis-existdb"/>
+    <property name="project.dir" value="project"/>
+
+    <property name="instance.url" value="http://admin:@127.0.0.1:8080/exist/rest/db/apps"/>
+
+    <target name="deploy">
+        <exec executable="utility/deploy.sh" outputproperty="deploy.output">
+            <arg line="${instance.url}/${project.app}/test.xql"/>
+            <arg line="${project.dir}/test.xql"/>
+        </exec>
+        <echo message="${deploy.output}"/>
+    </target>
+
+    <target name="test">
+        <exec executable="utility/test.sh" outputproperty="test.output">
+            <arg line="${instance.url}/${project.app}/test.xql"/>
+        </exec>
+        <echo message="${test.output}"/>
+    </target>
+
+    <target name="clean">
+        <exec executable="utility/clean.sh" outputproperty="clean.output">
+            <arg line="${instance.url}/${project.app}"/>
+        </exec>
+        <echo message="${clean.output}"/>
+    </target>
+</project>
