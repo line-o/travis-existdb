@@ -27,7 +27,7 @@ install:
 script:
   - ant test
 
-after_script:
+after_success:
   - cd ${EXIST_DB_FOLDER}
   - bin/shutdown.sh
 

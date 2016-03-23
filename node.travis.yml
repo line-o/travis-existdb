@@ -33,7 +33,7 @@ before_script:
 # this is the default
 # script: npm test
 
-after_script:
+after_success:
   - cd ${EXIST_DB_FOLDER}
   - bin/shutdown.sh
 
