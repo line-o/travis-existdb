@@ -9,8 +9,7 @@ if [ -z "${RESULT}" ]; then
 fi
 
 if [ "${RESULT}" = "<result>${EXPECTED}</result>" ]; then
-    echo "${EXPECTED}"
-    echo "expected result: ${RESULT}"
+    echo "Looking good. Server responded with: ${RESULT}"
     exit 0
 fi
 
