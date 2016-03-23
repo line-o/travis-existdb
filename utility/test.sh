@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 URL=${1}
 RESULT=`curl -s ${URL}`
 EXPECTED=${EXIST_DB_VERSION:6}

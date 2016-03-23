@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 set -e
 # Is this version of existDB already cached? Meaning, the folder exists

@@ -1,3 +1,3 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 RESULT=`curl -X DELETE ${1}`
 echo ${RESULT}

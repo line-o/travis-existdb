@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 cd ${EXIST_DB_FOLDER}
 nohup bin/startup.sh &
