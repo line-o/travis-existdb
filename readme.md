@@ -6,8 +6,6 @@ It is language independent but was tested only with Java and nodeJS. Both setups
 
 You can test applications, that are served from the db or consume one of its APIs.
 
-{{TOC}}
-
 ## tl;dr
 
 CI? You should have it.
@@ -124,22 +122,22 @@ Downloading and building exist from source can take up to 3 minutes. So, you may
 
 1. Is this version of existDB already cached? 
 
-	In our case that boils down to: does the folder exist?
+    In our case that boils down to: does the folder exist?
 
-	```sh
-	if [ -d "$EXIST_DB_FOLDER" ]; then
-	  echo "Using cached eXist DB instance: ${EXIST_DB_VERSION}."
-	  exit 0
-	fi
-	```
+    ```sh
+    if [ -d "$EXIST_DB_FOLDER" ]; then
+      echo "Using cached eXist DB instance: ${EXIST_DB_VERSION}."
+      exit 0
+    fi
+    ```
 
 1. Teardown this Database
 
-	Remove any data that is or might be left behind by your tests and remove logs, too.
-	To make sure that you will always get the latest version for branches or refs like HEAD,
-	anything but releases should be excluded from caching. 
+    Remove any data that is or might be left behind by your tests and remove logs, too.
+    To make sure that you will always get the latest version for branches or refs like HEAD,
+    anything but releases should be excluded from caching. 
 
-	```sh
+    ```sh
     if [[ "${EXIST_DB_VERSION}" == eXist* ]]; then
         echo "reset data and logfiles for ${EXIST_DB_VERSION}"
         cd ${EXIST_DB_FOLDER}
@@ -150,11 +148,11 @@ Downloading and building exist from source can take up to 3 minutes. So, you may
     
     echo "exclude ${EXIST_DB_VERSION} from cache"
     rm -rf ${EXIST_DB_FOLDER}
-	```
+    ```
 
 Put together:
-	
-```sh
+
+```yaml
 before_cache:
   - ci/teardown-db.sh
 cache:
@@ -166,7 +164,7 @@ cache:
 
 If you are not testing a java-application, as I was, you need to install java 1.8 into to the testing container with:
 
-```
+```yaml
 addons:
   apt:
     packages:
@@ -175,7 +173,7 @@ addons:
 
 and make this version the default by adding
 
-```
+```yaml
   - export JAVA_HOME=/usr/lib/jvm/java-8-oracle
 ```
 
